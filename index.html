@@ -88,18 +88,66 @@
                     <label for="name" style="display: block; margin-bottom: 5px;">Name:</label>
                     <input type="text" id="name" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
                 </div>
+
+                <div>
+                    <label for="email" style="display: block; margin-bottom: 5px;">Email:</label>
+                    <input type="email" id="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+
+                <div>
+                    <label for="password" style="display: block; margin-bottom: 5px;">Password:</label>
+                    <input type="password" id="password" required 
+                           style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                </div>
+
+                <div>
+                    <label for="dob" style="display: block; margin-bottom: 5px;">Date of Birth:</label>
+                    <input type="date" id="dob" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+
                 <div>
                     <label for="address" style="display: block; margin-bottom: 5px;">Address:</label>
                     <input type="text" id="address" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
                 </div>
-                <div>
-                    <label for="mobile" style="display: block; margin-bottom: 5px;">Mobile:</label>
-                    <input type="tel" id="mobile" required pattern="\+254[0-9]{9}" placeholder="+254xxxxxxxxx" 
-                           style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+                <div style="margin-bottom: 10px;">
+                    <label style="display: block; margin-bottom: 5px;">Do you have a phone number?</label>
+                    <div style="display: flex; gap: 20px;">
+                        <label style="display: flex; align-items: center;">
+                            <input type="radio" name="hasPhone" value="yes" onchange="togglePhoneFields(true)" checked>
+                            <span style="margin-left: 5px;">Yes</span>
+                        </label>
+                        <label style="display: flex; align-items: center;">
+                            <input type="radio" name="hasPhone" value="no" onchange="togglePhoneFields(false)">
+                            <span style="margin-left: 5px;">No</span>
+                        </label>
+                    </div>
                 </div>
-                <div>
-                    <label for="email" style="display: block; margin-bottom: 5px;">Email:</label>
-                    <input type="email" id="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+                <div id="phoneFields" style="display: flex; gap: 10px;">
+                    <div style="width: 30%;">
+                        <label for="countryCode" style="display: block; margin-bottom: 5px;">Country Code:</label>
+                        <select id="countryCode" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                            <option value="+254">Kenya (+254)</option>
+                            <option value="+255">Tanzania (+255)</option>
+                            <option value="+256">Uganda (+256)</option>
+                            <option value="+251">Ethiopia (+251)</option>
+                        </select>
+                    </div>
+                    <div style="width: 70%;">
+                        <label for="phoneNumber" style="display: block; margin-bottom: 5px;">Phone Number:</label>
+                        <input type="tel" id="phoneNumber" pattern="[0-9]{9}" placeholder="712345678" 
+                               style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <label style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" required id="terms">
+                        <span>I agree to the terms and conditions</span>
+                    </label>
                 </div>
 
                 <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer;">
@@ -110,13 +158,27 @@
     </div>
 
     <script>
+        function togglePhoneFields(show) {
+            const phoneFields = document.getElementById('phoneFields');
+            phoneFields.style.display = show ? 'flex' : 'none';
+            const phoneNumber = document.getElementById('phoneNumber');
+            phoneNumber.required = show;
+        }
+
         function addContact(event) {
             event.preventDefault();
             
             const name = document.getElementById('name').value;
             const address = document.getElementById('address').value;
-            const mobile = document.getElementById('mobile').value;
+            const hasPhone = document.getElementById('input[name="hasPhone"]:checked').value;
             const email = document.getElementById('email').value;
+
+            let mobile = 'N/A';
+            if (hasPhone === 'yes') {
+                const countryCode = document.getElementById('countryCode').value;
+                const phoneNumber = document.getElementById('phoneNumber').value;
+                mobile = countryCode + phoneNumber;
+            }
 
             const table = document.getElementById('contactsTable').getElementsByTagName('tbody')[0];
             const newRow = table.insertRow();
