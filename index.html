@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assignment II</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <!-- Ordered list with roman numerals -->
+        <div style="margin-bottom: 30px;">
+            <h2 style="color: #333;">Popular Phone Brands</h2>
+
+            <ol type="I" style="color: #444;">
+                <li>Samsung</li>
+                <li>Redmi</li>
+                <li>Huawei</li>
+                <li>Nokia</li>
+            </ol>
+        </div>
+
+        <!-- External image -->
+        <div style="margin-bottom: 30px;">
+            <img src="https://images.pexels.com/photos/14066351/pexels-photo-14066351.jpeg" alt="Photo by Lucas Andrade from Pexels" style="max-width: 100%; height: auto; border-radius: 8px;">
+        </div>
+
+        <!-- Contacts Table -->
+        <div style="margin-bottom: 30px; overflow-x: auto;">
+            <h2 style="color: #333;">Contact Directory</h2>
+
+            <table id="contactsTable" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background-color: #f4f4f4;">
+                        <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Name</th>
+                        <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Address</th>
+                        <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Mobile</th>
+                        <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Email</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Rowanne Goodwin</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Nairobi, Kenya</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">+254712345678</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">godwinrowanne@mail.com</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Thomas Wendell</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Kisumu, Kenya</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">+254723456789</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">wendell@mail.com</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Brandon Lance</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Mombasa, Kenya</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">+25434567890</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">brandon@mail.com</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Cecilia Renee</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Machakos, Kenya</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">+254745678901</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">renne@mail.com</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Samuel Tex</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">Kakamega, Kenya</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">+254756789012</td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">samtex@mail.com</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Registration Form -->
+        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+            <h2 style="color: #333;">Contact Registration</h2>
+
+            <form id="registrationForm" onsubmit="return addContact(event)" style="display: flex; flex-direction: column; gap: 15px;">
+                <div>
+                    <label for="name" style="display: block; margin-bottom: 5px;">Name:</label>
+                    <input type="text" id="name" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div>
+                    <label for="address" style="display: block; margin-bottom: 5px;">Address:</label>
+                    <input type="text" id="address" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div>
+                    <label for="mobile" style="display: block; margin-bottom: 5px;">Mobile:</label>
+                    <input type="tel" id="mobile" required pattern="\+254[0-9]{9}" placeholder="+254xxxxxxxxx" 
+                           style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+                <div>
+                    <label for="email" style="display: block; margin-bottom: 5px;">Email:</label>
+                    <input type="email" id="email" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+
+                <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer;">
+                    Add Contact
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function addContact(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const mobile = document.getElementById('mobile').value;
+            const email = document.getElementById('email').value;
+
+            const table = document.getElementById('contactsTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            
+            const cells = [name, address, mobile, email];
+
+            cells.forEach(cell => {
+                const newCell = newRow.insertCell();
+
+                newCell.textContent = cell;
+                newCell.style.padding = '12px';
+                newCell.style.border = '1px solid #ddd';
+            });
+
+            document.getElementById('registrationForm').reset();
+            return false;
+        }
+    </script>
+</body>
+</html>
